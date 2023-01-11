@@ -1,0 +1,13 @@
+*__pycache__/
+*.wav
+*.zip
+*.rar
+*.xlsx
+model/
+audios/
+reportes/
+sources/
+IVR/
+tts/
+tmp/
+*.sql
