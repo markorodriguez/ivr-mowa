@@ -9,7 +9,7 @@ class Speech:
         self.phone = phone
         self.name = name
         self.dni = dni
-        self.speech = f'Hola, ¿Me comunico con {self.name}?'
+        self.speech = f'Hola {self.name}'
         self.engine = engine
         self.details = []
         self.idx = idx
@@ -25,7 +25,7 @@ class Speech:
     def generate_details(self):
         audio_length = round(self.audio_silent.duration_seconds, 2)
         audio_rounded = round(self.audio_silent.duration_seconds)
-        self.details = [self.id_audio, self.dni, self.speech, self.phone,  audio_length, audio_rounded, ' ']
+        self.details = [self.id_audio, self.dni, self.phone, self.speech, audio_length, audio_rounded, ' ']
 
     def generate_report(self):
         self.worksheet.write(self.idx+1, 0, str(self.details[0]))

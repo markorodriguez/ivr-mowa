@@ -22,6 +22,8 @@ recognizer.energy_threshold = 500
 
 model = whisper.load_model('small')
 model_base = whisper.load_model('base')
+model_medium = whisper.load_model('medium')
+
 
 def improve_audio():
     # audio_start = path.join(path.dirname(path.realpath(__file__)), 'audios/Mestrias/0bfee943-70b1-4910-b0f7-dc853fa73408.wav')
@@ -45,44 +47,71 @@ def transpile_audio():
             print('Error')
 
 
-
-
 def get_audios_file():
     # GET ALL THE AUDIOS FROM IVR/296320 wITH THE SAME NAME
-    audios = os.listdir('./IVR/296320')
-    
+    audios = os.listdir('./IVR/voice')
+
     workbook = xlsxwriter.Workbook('./comparacion.xlsx')
     worksheet = workbook.add_worksheet()
 
     worksheet.write('A1', 'Audio ID')
     worksheet.write('B1', 'Google')
-    worksheet.write('C1', 'Whisper BASE')
-    worksheet.write('D1', 'Whisper SMALL')
+    worksheet.write('C1', 'Tiempo')
+    worksheet.write('D1', 'Whisper BASE')
+    worksheet.write('E1', 'Tiempo')
+    worksheet.write('F1', 'Whisper SMALL')
+    worksheet.write('G1', 'Tiempo')
+    worksheet.write('H1', 'Whisper MEDIUM')
+    worksheet.write('I1', 'Tiempo')
 
-    for idx, audio in enumerate(audios):
-        compare_models(audio, idx+1, worksheet)
+    idx = 0
+
+    for i in range(len(audios)):
+        with sr.AudioFile(f'./IVR/voice/{audios[i]}') as source:
+            recognizer.adjust_for_ambient_noise(source, duration=0.5)
+            audio = recognizer.record(source)
+            print('audio', audios[i])
+            try:
+                google_start = time.perf_counter()
+                text_google = recognizer.recognize_google(
+                    audio, language='es-ES')
+                google_end = time.perf_counter()
+
+                base_start = time.perf_counter()
+                result_base = model_base.transcribe(
+                    f'./IVR/voice/{audios[i]}', language='es')
+                base_end = time.perf_counter()
+
+                small_start = time.perf_counter()
+                result = model.transcribe(
+                    f'./IVR/voice/{audios[i]}', language='es')
+                small_end = time.perf_counter()
+
+                medium_start = time.perf_counter()
+                result_medium = model_medium.transcribe(
+                    f'./IVR/voice/{audios[i]}', language='es')
+                medium_end = time.perf_counter()
+
+                idx += 1
+                print(result['text'])
+                print(result_base['text'])
+                worksheet.write(idx, 0, audios[i])
+                worksheet.write(idx, 1, text_google)
+                worksheet.write(idx, 2, str(
+                    round(google_end - google_start, 2)))
+                worksheet.write(idx, 3, result_base['text'])
+                worksheet.write(idx, 4, str(
+                    round(base_end - base_start, 2)))
+                worksheet.write(idx, 5, result['text'])
+                worksheet.write(idx, 6, str(
+                    round(small_end - small_start, 2)))
+                worksheet.write(idx, 7, result_medium['text'])
+                worksheet.write(idx, 8, str(
+                    round(medium_end - medium_start , 2)))
+
+            except:
+                print('error')
     workbook.close()
-
-
-def compare_models(audio_path, idx, worksheet):
-    with sr.AudioFile(f'./IVR/296320/{audio_path}') as source:
-        recognizer.adjust_for_ambient_noise(source, duration=0.5)
-        audio = recognizer.record(source)
-        print(audio_path)
-        try:
-            text_google = recognizer.recognize_google(audio, language='es-ES')
-            result = model.transcribe(f'./IVR/296320/{audio_path}', language='es')
-            result_base = model_base.transcribe(f'./IVR/296320/{audio_path}', language='es')
-            print(result['text'])
-            print(result_base['text'])
-            worksheet.write(idx, 0, audio_path)
-            worksheet.write(idx, 1, text_google)
-            worksheet.write(idx, 2, result_base['text'])
-            worksheet.write(idx, 3, result['text'])
-        except:
-            print('error')
-
-    print('---------------------')
 
 
 get_audios_file()
