@@ -10,3 +10,4 @@ IVR/
 tts/
 tmp/
 *.sql
+node_modules/
