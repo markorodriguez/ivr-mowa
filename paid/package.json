@@ -5,5 +5,16 @@
     "ibm-watson": "^7.1.2",
     "microsoft-cognitiveservices-speech-sdk": "^1.24.1",
     "xlsx": "^0.18.5"
-  }
+  },
+  "name": "paid",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
