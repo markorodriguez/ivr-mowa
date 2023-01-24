@@ -49,6 +49,7 @@ class Speech:
         self.worksheet.write(self.idx+1, 1, details_error[1])
         self.worksheet.write(self.idx+1, 2, details_error[2])
         self.worksheet.write(self.idx+1, 3, details_error[3])
-        
+    
+    # Generate error report
     
     
