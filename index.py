@@ -208,8 +208,3 @@ def desired_quantity(source, sheet, report, campaign, desired_quantity):
     print('Se encontraron', len(excel[:1000]) - len(users), 'errores')
     print('Done')
 
-def write_errors():
-    print('errors')
-
-def write_success():
-    print('success')

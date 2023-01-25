@@ -4,7 +4,7 @@ from pydub import AudioSegment;
 import os
 
 class Speech:
-    def __init__(self, id_audio, phone, dni, name, engine, idx, worksheet, campaign):
+    def __init__(self, id_audio, phone, dni, name, engine, idx, worksheet, campaign, iteration):
         self.id_audio = id_audio
         self.phone = phone
         self.name = name
@@ -16,6 +16,8 @@ class Speech:
         self.worksheet = worksheet
         self.audio_silent = " "
         self.campaign = campaign
+        self.iteration = iteration
+        
 
     def create_audio(self):
         os.makedirs(f'./tmp/{self.campaign}', exist_ok=True)
@@ -28,19 +30,32 @@ class Speech:
         self.details = [self.id_audio, self.dni, self.phone, self.speech, audio_length, audio_rounded, ' ']
 
     def generate_report(self):
-        self.worksheet.write(self.idx+1, 0, str(self.details[0]))
+        """
+        self.worksheet.write(self.idx+1, 0, self.details[0])
         self.worksheet.write(self.idx+1, 1, self.details[1])
         self.worksheet.write(self.idx+1, 2, self.details[2])
         self.worksheet.write(self.idx+1, 3, self.details[3])
         self.worksheet.write(self.idx+1, 4, self.details[4])
         self.worksheet.write(self.idx+1, 5, self.details[5])
+        self.worksheet.write(self.idx+1, 6, self.details[6])
+        """
+
+        return self.details
+
+        
+        #write_row
+        
+
+        
+
+
 
     def add_silence(self):
-        
         audio = AudioSegment.from_wav(f'./tmp/{self.campaign}/{self.id_audio}.wav')
         self.audio_silent = audio.append(audio.silent(duration=5000))
-        os.makedirs(f'./audios/{self.campaign}', exist_ok=True)
-        self.audio_silent.export(f'./audios/{self.campaign}/{self.id_audio}.wav', format='wav')
+        #os.makedirs(f'./audios/{self.campaign}', exist_ok=True)
+        os.makedirs(f'./costos_test/audios/{self.iteration}', exist_ok=True)
+        self.audio_silent.export(f'./costos_test/audios/{self.iteration}/{self.id_audio}DNI{self.dni}.wav', format='wav')
         os.remove(f'./tmp/{self.campaign}/{self.id_audio}.wav')
     
     def set_error(self, reason):
