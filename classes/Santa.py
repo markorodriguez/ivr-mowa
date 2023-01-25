@@ -45,17 +45,12 @@ class Speech:
         
         #write_row
         
-
-        
-
-
-
     def add_silence(self):
         audio = AudioSegment.from_wav(f'./tmp/{self.campaign}/{self.id_audio}.wav')
         self.audio_silent = audio.append(audio.silent(duration=5000))
         #os.makedirs(f'./audios/{self.campaign}', exist_ok=True)
-        os.makedirs(f'./SULLANA_TEST/audios/{self.iteration}', exist_ok=True)
-        self.audio_silent.export(f'./SULLANA_TEST/audios/{self.iteration}/{self.id_audio}.wav', format='wav')
+        os.makedirs(f'./SANTA_TEST/audios/{self.iteration}', exist_ok=True)
+        self.audio_silent.export(f'./SANTA_TEST/audios/{self.iteration}/{self.id_audio}.wav', format='wav')
         os.remove(f'./tmp/{self.campaign}/{self.id_audio}.wav')
     
     def set_error(self, reason):

@@ -6,7 +6,7 @@ import os
 import xlsxwriter
 import time
 import uuid
-from classes.Speech import Speech
+from classes.Santa import Speech
 
 # Setting properties for Pyttsx3 library
 engine = pyttsx3.init()
@@ -29,7 +29,7 @@ def generate_report(idx):
     
     # Create the excel report and adding headers
     #print('Creating the excel report...')
-    workbook = xlsxwriter.Workbook(f'./SULLANA_TEST/reportes/{idx}.xlsx')
+    workbook = xlsxwriter.Workbook(f'./SANTA_TEST/reportes/{idx}.xlsx')
     
     return [workbook]
 
@@ -39,8 +39,6 @@ def generate_speech(source, sheet, report, campaign):
     users = []
     print('Reading the excel file...')
     excel = pd.ExcelFile(f'./bd/{source}.xlsx').parse(f'{sheet}')
-
-    #print(excel)
 
     # Create the excel report and adding headers
 
@@ -65,11 +63,10 @@ def generate_speech(source, sheet, report, campaign):
 
     for i in range(0, len(excel)):
         
-        print(f'Audio {counter} de {len(excel)} generado')
-        
         worsheet = wsh_successBase.add_worksheet()
         
         counter += 1
+        print(f'Audio {counter} de {len(excel)}')
 
         validIdx += 1 
 
@@ -117,6 +114,7 @@ def generate_speech(source, sheet, report, campaign):
 
 
             wsh_success.close()
+
             users = []
             validIdx = 0
             print('---------------')
@@ -124,10 +122,10 @@ def generate_speech(source, sheet, report, campaign):
         #print('acá')    
         uuid_id = str(uuid.uuid4())
         phone = excel['TELEFONO 1'][i]
-        dni = excel['DOI'][i]
+        dni = excel['Dni'][i]
         name = excel['NOMBRE'][i]
 
-        if not name == '-':
+        if not name == '-': 
             users.append(Speech( uuid_id, phone, dni, name, engine, idx=validIdx, worksheet=worsheet, campaign=campaign, iteration=iteration_group))
         
     for workbook in workbooks:
@@ -140,7 +138,7 @@ def generate_speech(source, sheet, report, campaign):
 #generate_speech(source, sheet, report, campaign)
 #generate_speech('mestrias', 'HOJA_FINAL2', 'ReporteMestrias', 'Mestrias')
 #generate_speech('esan', 'HOJA_FINAL', 'ReporteESAN', 'Esan')
-generate_speech('sullana', 'Hoja1', 'Reporte_Sullana', 'sullana')
+generate_speech('santa', 'Hoja1', 'Reporte_Santa', 'SANTA')
 
 
 
