@@ -40,7 +40,7 @@ def generate_speech(source, sheet, report, campaign):
     worksheet.write('D1', 'SPEECH')
     worksheet.write('E1', 'LONGITUD')
     worksheet.write('F1', 'REDONDEO')
-    worksheet.write('G1', 'RESPUESTA')
+
 
 
     # Create the excel report for the errors
@@ -109,7 +109,7 @@ def generate_speech(source, sheet, report, campaign):
 #generate_speech(source, sheet, report, campaign)
 #generate_speech('mestrias', 'HOJA_FINAL2', 'ReporteMestrias', 'Mestrias')
 #generate_speech('esan', 'HOJA_FINAL', 'ReporteESAN', 'Esan')
-generate_speech('custom1101', 'HOJA_FINAL2', 'Reporte_Prueba_11012023', 'R_11012023')
+generate_speech('sullana', 'Hoja1', 'variosnumeros', 'R_13022023')
 def find_unique():
     values = []
     excel = pd.ExcelFile(f'./sources/mestrias.xlsx').parse(f'HOJA_FINAL2')

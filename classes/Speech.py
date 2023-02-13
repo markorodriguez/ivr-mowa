@@ -30,6 +30,7 @@ class Speech:
         self.details = [self.id_audio, self.dni, self.phone, self.speech, audio_length, audio_rounded, ' ']
 
     def generate_report(self):
+
         """
         self.worksheet.write(self.idx+1, 0, self.details[0])
         self.worksheet.write(self.idx+1, 1, self.details[1])
@@ -44,11 +45,6 @@ class Speech:
 
         
         #write_row
-        
-
-        
-
-
 
     def add_silence(self):
         audio = AudioSegment.from_wav(f'./tmp/{self.campaign}/{self.id_audio}.wav')
