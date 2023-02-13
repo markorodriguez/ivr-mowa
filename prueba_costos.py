@@ -8,6 +8,9 @@ import time
 import uuid
 from classes.Speech import Speech
 
+
+#TODO: VALIDAR QUE LAS CABECERAS DIGAN "DNI", "NOMBRE", Y "TELEFONO X X X X " (CUANTAS VECES SEA)
+
 # Setting properties for Pyttsx3 library
 engine = pyttsx3.init()
 
@@ -29,6 +32,8 @@ def generate_report(idx):
     
     # Create the excel report and adding headers
     #print('Creating the excel report...')
+
+    # TODO: CAMBIAR EL NOMBRE DE LA CARPETA DE REPORTES, CREARLA SI NO EXISTE
     workbook = xlsxwriter.Workbook(f'./SULLANA_TEST/reportes/{idx}.xlsx')
     
     return [workbook]
@@ -38,6 +43,7 @@ def generate_speech(source, sheet, report, campaign):
     
     users = []
     #print('Reading the excel file...')
+    # TODO: COLOCAR LA BASE DE DATOS EN LA CARPETA BD
     excel = pd.ExcelFile(f'./bd/{source}.xlsx').parse(f'{sheet}')
 
     #print(excel)
@@ -160,6 +166,8 @@ def generate_speech(source, sheet, report, campaign):
 #generate_speech('mestrias', 'HOJA_FINAL2', 'ReporteMestrias', 'Mestrias')
 #generate_speech('esan', 'HOJA_FINAL', 'ReporteESAN', 'Esan')
 generate_speech('sullana', 'Hoja1', 'Reporte_Sullana', 'sullana')
+# FUENTE, HOJA DEL EXCEL, XXXXX, CAMPAÑA
+# TODO: ACÁ SE CAMBIAN LOS PARÁMETROS P
 
 
 

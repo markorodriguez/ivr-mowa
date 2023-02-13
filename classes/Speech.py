@@ -46,6 +46,7 @@ class Speech:
         
         #write_row
 
+    # TODO: CAMBIAR EL NOMBRE DE LA CARPETA DE AUDIOS TODO LO QUE DIGA SULLANA_TEST
     def add_silence(self):
         audio = AudioSegment.from_wav(f'./tmp/{self.campaign}/{self.id_audio}.wav')
         self.audio_silent = audio.append(audio.silent(duration=5000))
