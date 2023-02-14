@@ -46,14 +46,14 @@ class Speech:
         
         #write_row
 
-    # TODO: CAMBIAR EL NOMBRE DE LA CARPETA DE AUDIOS TODO LO QUE DIGA SANTA-V2
+    # TODO: CAMBIAR EL NOMBRE DE LA CARPETA DE AUDIOS TODO LO QUE DIGA VIDAL-V2
     def add_silence(self):
         audio = AudioSegment.from_wav(f'./tmp/{self.campaign}/{self.id_audio}.wav')
         self.audio_silent = audio.append(audio.silent(duration=5000))
 
         #os.makedirs(f'./audios/{self.campaign}', exist_ok=True)
-        os.makedirs(f'./SANTA-V2/audios/{self.iteration}', exist_ok=True)
-        self.audio_silent.export(f'./SANTA-V2/audios/{self.iteration}/{self.id_audio}.wav', format='wav')
+        os.makedirs(f'./VIDAL-V2/audios/{self.iteration}', exist_ok=True)
+        self.audio_silent.export(f'./VIDAL-V2/audios/{self.iteration}/{self.id_audio}.wav', format='wav')
         os.remove(f'./tmp/{self.campaign}/{self.id_audio}.wav')
     
     def set_error(self, reason):

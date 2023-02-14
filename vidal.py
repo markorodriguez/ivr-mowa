@@ -6,7 +6,7 @@ import os
 import xlsxwriter
 import time
 import uuid
-from classes.Speech import Speech
+from classes.Vidal import Speech
 
 
 #TODO: VALIDAR QUE LAS CABECERAS DIGAN "DNI", "NOMBRE", Y "TELEFONO X X X X " (CUANTAS VECES SEA)
@@ -34,7 +34,7 @@ def generate_report(idx):
     #print('Creating the excel report...')
 
     # TODO: CAMBIAR EL NOMBRE DE LA CARPETA DE REPORTES, CREARLA SI NO EXISTE
-    workbook = xlsxwriter.Workbook(f'./SANTA-V2/reportes/{idx}.xlsx')
+    workbook = xlsxwriter.Workbook(f'./VIDAL-V2/reportes/{idx}.xlsx')
     
     return [workbook]
 
@@ -73,9 +73,10 @@ def generate_speech(source, sheet, report, campaign):
         if 'TELEFONO' in headers[i]:
             phone_headers.append(headers[i])
 
-    print(phone_headers)
+
     counter = 0
 
+    start = time.perf_counter()
     for i in range(0, len(excel)):
         
         #print(f'Audio {counter} de {len(excel)} generado')
@@ -89,7 +90,7 @@ def generate_speech(source, sheet, report, campaign):
         wsh_success = generate_report(iteration_group)[0]
 
         if i % 10000 == 0 and i != 0 or i == len(excel)-1:
-            print(users, 'users')
+            #print(users, 'users')
             # Declarar excels
             iteration_group += 1
             #print('entró')
@@ -133,7 +134,7 @@ def generate_speech(source, sheet, report, campaign):
             wsh_success.close()
             users = []
             validIdx = 0
-            print('---------------')
+
 
         #print('acá')    
 
@@ -160,14 +161,16 @@ def generate_speech(source, sheet, report, campaign):
     for workbook in workbooks:
         workbook.close()
 
+    finish = time.perf_counter()
     print('Done')
+    print(f'Finished in {round(finish-start, 2)} second(s)')
 
 
 
 #generate_speech(source, sheet, report, campaign)
 #generate_speech('mestrias', 'HOJA_FINAL2', 'ReporteMestrias', 'Mestrias')
 #generate_speech('esan', 'HOJA_FINAL', 'ReporteESAN', 'Esan')
-generate_speech('sullana_feb', 'Hoja1', 'Reporte_Sullana', 'sullana')
+generate_speech('vidal_feb', 'Hoja1', 'xxxx', 'vidal')
 # FUENTE, HOJA DEL EXCEL, XXXXX, CAMPAÑA
 # TODO: ACÁ SE CAMBIAN LOS PARÁMETROS P
 
